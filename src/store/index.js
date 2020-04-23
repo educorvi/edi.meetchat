@@ -9,22 +9,26 @@ export default new Vuex.Store({
     chats: [
       {
         name: "Julian",
-        url: "https://files.jp-studios.de/1"
+        url: "https://couch.kraeks.de/classroomchat_547a3ea1533a45b69221fc0d9e156b18"
       },
       {
         name: "Große Gruppe",
-        url: "https://files.jp-studios.de/2"
+        url: "https://couch.kraeks.de/classroomchat_547a3ea1533a45b69221fc0d9e156b18"
       },
       {
         name: "Kleine Gruppe",
-        url: "https://files.jp-studios.de/3"
+        url: "https://couch.kraeks.de/classroomchat_cab8d5d8529047af882e2258e5698d27"
       }
     ],
-    activeChat: null
+    activeChat: null,
+    messages: []
   },
   mutations: {
     setActiveChat(state, c) {
       state.activeChat = c;
+    },
+    setMessages(state, m) {
+      state.messages = m;
     }
   },
   actions: {
@@ -34,6 +38,7 @@ export default new Vuex.Store({
   getters: {
     chats: state => state.chats,
     activeChat: state => state.activeChat,
-    version: state => state.version
+    version: state => state.version,
+    messages: state => state.messages
   }
 })
