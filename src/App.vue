@@ -38,12 +38,11 @@ export default {
   #contentDesktop {
     height: 89vh;
     border-width: medium !important;
-    display: flex !important;
   }
 
   @include media-breakpoint-up(md) {
       .desktop {
-        display: block !important;
+        display: flex !important;
       }
     .mobile {
       display: none !important;
