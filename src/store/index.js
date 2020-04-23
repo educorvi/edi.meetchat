@@ -5,6 +5,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    version: process.env.PACKAGE_VERSION ||'0.0.0',
     chats: [
       {
         name: "Julian",
@@ -32,6 +33,7 @@ export default new Vuex.Store({
   },
   getters: {
     chats: state => state.chats,
-    activeChat: state => state.activeChat
+    activeChat: state => state.activeChat,
+    version: state => state.version
   }
 })

@@ -4,6 +4,7 @@
             <b-navbar-brand class="mr-5 brand">
                 <b-icon-chat-dots class="mr-3" variant="primary" style="height: 8vh; width: auto"/>
                 <h2>MeetChat</h2>
+                <p class="text-muted ml-1">v{{version}}</p>
             </b-navbar-brand>
             <b-navbar-toggle target="collapse"></b-navbar-toggle>
 
@@ -22,10 +23,12 @@
     //@vuese
     //Navbar zur Navigation
 
+    import {mapGetters} from "vuex"
     export default {
         name: "Headbar",
         components: {},
         computed: {
+            ...mapGetters(["version"])
         },
         methods: {
 
@@ -38,6 +41,12 @@
         display: flex;
         align-items: center;
     }
+
+    .brand > * {
+        margin: 0;
+        padding: 0;
+    }
+
 
     #bar {
         position: sticky;
