@@ -9,7 +9,7 @@
         </div>
             <div id="sendbarWrapper">
                 <div id="sendbar">
-                    <chatsend-bar/>
+                    <chatsend-bar @send="send"/>
                 </div>
             </div>
 
@@ -20,7 +20,7 @@
     /* eslint-disable vue/no-unused-components */
 
     import {mapGetters} from "vuex"
-    import {setRemote, getAllMessages} from "@/database";
+    import {setRemote, getAllMessages, putMessage} from "@/database";
     import Chatmessage from "@/components/chatroomComponents/Chatmessage";
     import ChatsendBar from "@/components/chatroomComponents/chatsendBar";
 
@@ -38,7 +38,7 @@
         },
         data() {
             return {
-                user: "julian_0815",
+                user: "Julian Pollinger_julian.pollinger@jp-studios.de",
                 first: null,
                 reveal: 0
             }
@@ -79,7 +79,14 @@
                 this.reveal = this.first < 50 ? this.first : 50;
                 this.first = this.first < 50 ? 0 : this.first - 50;
                 document.getElementById(scrollTo).scrollIntoView({block: "start"});
-            }
+            },
+            send(p) {
+                putMessage({
+                    user: this.user,
+                    text: p,
+                    time: new Date()
+                })
+            },
         },
     }
 </script>
