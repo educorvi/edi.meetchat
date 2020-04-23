@@ -33,6 +33,7 @@ export default {
     min-width: 300px;
     width: 25%;
     border-width: medium !important;
+    z-index: 7000;
   }
 
   #contentDesktop {
@@ -55,6 +56,9 @@ export default {
     .mobile {
       display: block;
     }
+  }
+
+  #app {
   }
 
 </style>

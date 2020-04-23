@@ -7,6 +7,12 @@
                    :key="message.user+new Date(message.time).toISOString()" :message="message"></Chatmessage>
             </transition-group>
         </div>
+            <div id="sendbarWrapper">
+                <div id="sendbar">
+                    <chatsend-bar/>
+                </div>
+            </div>
+
     </div>
 </template>
 
@@ -16,10 +22,11 @@
     import {mapGetters} from "vuex"
     import {setRemote, getAllMessages} from "@/database";
     import Chatmessage from "@/components/chatroomComponents/Chatmessage";
+    import ChatsendBar from "@/components/chatroomComponents/chatsendBar";
 
     export default {
         name: "Chatroom",
-        components: {Chatmessage},
+        components: {ChatsendBar, Chatmessage},
         computed: {
             ...mapGetters(["activeChat", "messages"]),
             shortendMessages() {
@@ -32,7 +39,8 @@
         data() {
             return {
                 user: "julian_0815",
-                first: null
+                first: null,
+                reveal: 0
             }
         },
         mounted() {
@@ -54,16 +62,15 @@
             },
 
             customScroll() {
-
-
-                    // document.getElementById("overflow").scrollTo({
-                    //     top: 99999999999999999999999999999,
-                    //     behavior: "smooth"
-                    // });
+                if (this.reveal === 0) {
                     document.getElementById(this.shortendMessages[this.shortendMessages.length - 1]._id).scrollIntoView({
                         behavior: "smooth",
                         block: "start"
                     });
+
+                } else {
+                    this.reveal--;
+                }
 
             },
             revealOlder() {
@@ -83,7 +90,7 @@
     #overflow {
         overflow-y: scroll;
         height: 88vh;
-        padding: 10px;
+        padding: 12px 12px 50px;
     }
     #chathistory {
         max-width: 100%;
@@ -100,5 +107,27 @@
     .customscroll::-webkit-scrollbar-thumb {
         -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
         background-color: $primary;
+    }
+
+    #app {
+
+    }
+
+    #sendbarWrapper {
+        background-color: white;
+        position: absolute;
+        max-height: 50px;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        display: flex;
+        justify-content: end;
+    }
+    #sendbar {
+        padding-bottom: 10px;
+        width: 100%;
+        margin-left: 300px;
+        display: flex;
+        justify-content: center;
     }
 </style>

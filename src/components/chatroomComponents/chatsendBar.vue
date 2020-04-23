@@ -1,6 +1,6 @@
 <template>
     <div id="senddiv">
-        <b-form inline @submit="send" autocomplete="off">
+        <b-form inline @submit="send" autocomplete="off" class="mt-2">
 <!--            <b-checkbox class="mt-n1" switch v-model="$store.state.scrollWithChat">Scrolle automatisch mit dem Chat</b-checkbox>-->
             <b-row align-v="center" style="width: 100%">
                 <b-col cols="8">
@@ -44,9 +44,7 @@
         /*display: flex;*/
         /*justify-content: space-between;*/
         width: 100%;
-        padding: 12px 12px 30px;
         background-color: white;
-        height: 80px;
         max-width: 900px;
     }
 </style>
