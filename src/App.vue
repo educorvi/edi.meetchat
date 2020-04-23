@@ -1,28 +1,57 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <Headbar/>
+    <div id="content" class="border-top border-primary desktop">
+      <ChatList id="chatlistDesktop" class="border-right border-primary"/>
+    </div>
+    <div class="border-top border-primary mobile">
+      <ChatList class="border-right border-primary" :mobile="true"/>
+    </div>
+
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
 
+import ChatList from "@/components/ChatList";
+import Headbar from "@/components/Headbar";
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    Headbar,
+    ChatList
   }
 }
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<style lang="scss">
+  @import "styles";
+  #chatlistDesktop {
+    height: 89vh;
+    min-width: 300px;
+    width: 25%;
+    border-width: medium !important;
+  }
+
+  #contentDesktop {
+    border-width: medium !important;
+  }
+
+  @include media-breakpoint-up(md) {
+      .desktop {
+        display: block !important;
+      }
+    .mobile {
+      display: none !important;
+    }
+  }
+  @include media-breakpoint-up(sd) {
+    .desktop {
+      display: none;
+    }
+    .mobile {
+      display: block;
+    }
+  }
+
 </style>
