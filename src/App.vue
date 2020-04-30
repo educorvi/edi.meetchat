@@ -6,7 +6,8 @@
       <Chatroom style="width: 100%"/>
     </div>
     <div class="border-top border-primary mobile">
-      <ChatList class="border-right border-primary" :mobile="true"/>
+      <ChatList class="border-right border-primary customscroll" :mobile="true" v-if="!activeChat"/>
+      <Chatroom style="width: 100%" v-else :mobile="true"/>
     </div>
 
   </div>
@@ -17,12 +18,16 @@
 import ChatList from "@/components/ChatList";
 import Headbar from "@/components/Headbar";
 import Chatroom from "@/components/Chatroom";
+import {mapGetters} from "vuex";
 export default {
   name: 'App',
   components: {
     Chatroom,
     Headbar,
     ChatList
+  },
+  computed: {
+    ...mapGetters(["activeChat"])
   }
 }
 </script>
@@ -62,6 +67,8 @@ export default {
   }
 
   #app {
+    max-height: 100vh;
+    overflow: hidden;
   }
 
   .customscroll::-webkit-scrollbar-track {

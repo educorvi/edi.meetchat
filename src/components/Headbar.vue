@@ -1,6 +1,6 @@
 <template>
     <div id="bar">
-        <b-navbar toggleable="lg">
+        <b-navbar toggleable="md">
             <b-navbar-brand class="mr-5 brand">
                 <b-icon-chat-dots class="mr-3" variant="primary" style="height: 8vh; width: auto"/>
                 <h3>MeetChat</h3>

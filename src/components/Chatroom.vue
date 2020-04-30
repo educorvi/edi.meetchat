@@ -1,18 +1,28 @@
 <template>
-    <div id="chathistory" v-show="activeChat && (first || first === 0)">
-        <div id="overflow" class="customscroll">
-            <b-button v-if="first>0" @click="revealOlder" style="width: 100%;">Ältere Nachrichten</b-button>
-            <transition-group name="chat" @after-enter="customScroll">
-                <Chatmessage :id="message._id" v-for="message in shortendMessages" :user="user"
-                   :key="message.user+new Date(message.time).toISOString()" :message="message"></Chatmessage>
-            </transition-group>
-        </div>
+    <div>
+        <div id="chathistory" v-show="activeChat && (first || first === 0)">
+            <div v-if="mobile" class="p-2" id="mobileHeader">
+                <b-button @click="$store.commit('setActiveChat', null)">Zurück</b-button>
+                <h4 class="p-0 m-0" style="color: #f3f3f3">{{activeChat.name}}</h4>
+                <b-button>Infos</b-button>
+            </div>
+            <div id="overflow" class="customscroll">
+                <b-button v-if="first>0" @click="revealOlder" style="width: 100%;">Ältere Nachrichten</b-button>
+                <transition-group name="chat" @after-enter="customScroll">
+                    <Chatmessage :id="message._id+mobile" v-for="message in shortendMessages" :user="user"
+                                 :key="message.user+new Date(message.time).toISOString()" :message="message"></Chatmessage>
+                </transition-group>
+            </div>
             <div id="sendbarWrapper">
                 <div id="sendbar">
                     <chatsend-bar @send="send"/>
                 </div>
             </div>
 
+        </div>
+        <div v-if="activeChat && !(first || first === 0)">
+            <custom-spinner/>
+        </div>
     </div>
 </template>
 
@@ -23,17 +33,23 @@
     import {setRemote, getAllMessages, putMessage} from "@/database";
     import Chatmessage from "@/components/chatroomComponents/Chatmessage";
     import ChatsendBar from "@/components/chatroomComponents/chatsendBar";
+    import CustomSpinner from "@/components/CustomSpinner";
 
     export default {
         name: "Chatroom",
-        components: {ChatsendBar, Chatmessage},
+        components: {CustomSpinner, ChatsendBar, Chatmessage},
+        props: {
+            mobile: {
+                type: Boolean,
+            }
+        },
         computed: {
             ...mapGetters(["activeChat", "messages"]),
             shortendMessages() {
                 return this.messages ? this.messages.slice(this.first, this.messages.length) : []
             },
             remote() {
-                return this. activeChat.url
+                return this.activeChat.url
             }
         },
         data() {
@@ -49,7 +65,9 @@
             }
         },
         watch: {
-            activeChat: function () {this.changeRemote()}
+            activeChat: function () {
+                this.changeRemote()
+            }
         },
         methods: {
             changeRemote() {
@@ -63,7 +81,7 @@
 
             customScroll() {
                 if (this.reveal === 0) {
-                    document.getElementById(this.shortendMessages[this.shortendMessages.length - 1]._id).scrollIntoView({
+                    document.getElementById(this.shortendMessages[this.shortendMessages.length - 1]._id+this.mobile).scrollIntoView({
                         behavior: "smooth",
                         block: "start"
                     });
@@ -96,15 +114,22 @@
 
     #overflow {
         overflow-y: scroll;
-        height: 88vh;
-        padding: 12px 12px 50px;
+        height: 100%;
+        padding: 12px 12px;
+
     }
+
     #chathistory {
         max-width: 100%;
+        height: 78vh;
+        padding-bottom: 60px;
     }
 
-    #app {
-
+    #mobileHeader {
+        display: flex;
+        vertical-align: center;
+        justify-content: space-between;
+        background-color: $primary;
     }
 
     #sendbarWrapper {
@@ -117,10 +142,21 @@
         display: flex;
         justify-content: end;
     }
+
+    @include media-breakpoint-up(md) {
+        #senddiv{
+            margin-left: 300px;
+        }
+        #chathistory{
+            height: 88vh;
+        }
+    }
+
     #sendbar {
         padding-bottom: 10px;
+        padding-left: 10px;
+        padding-right: 10px;
         width: 100%;
-        margin-left: 300px;
         display: flex;
         justify-content: center;
     }
