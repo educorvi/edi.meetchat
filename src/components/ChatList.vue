@@ -1,6 +1,6 @@
 <template>
     <div>
-        <b-input placeholder="Suchen" class="rounded-0" v-model="search"/>
+        <b-input placeholder="Suchen" class="rounded-0" v-model="search" name="search" autocomplete="off"/>
         <div v-for="(chat, index) in filteredChats" :key="index+chat.name" @click="search=''">
             <div class="listitem">
                 <chat-preview :chat="chat"/>
