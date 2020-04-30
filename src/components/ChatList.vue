@@ -1,6 +1,7 @@
 <template>
     <div>
-        <div v-for="(chat, index) in chats" :key="index+chat.name">
+        <b-input placeholder="Suchen" class="rounded-0" v-model="search"/>
+        <div v-for="(chat, index) in filteredChats" :key="index+chat.name" @click="search=''">
             <div class="listitem">
                 <chat-preview :chat="chat"/>
             </div>
@@ -16,14 +17,22 @@
         name: "ChatList",
         components: {ChatPreview},
         computed: {
-            ...mapGetters(["chats"])
+            ...mapGetters(["chats"]),
+            filteredChats() {
+                return this.search === ""?this.chats:this.chats.filter(obj=>obj.name.toLowerCase().includes(this.search.toLowerCase()));
+            }
         },
         props: {
             mobile: {
                 type: Boolean,
                 required: false
             }
-        }
+        },
+        data() {
+            return {
+                search: ""
+            }
+        },
     }
 </script>
 
