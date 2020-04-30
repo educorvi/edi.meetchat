@@ -3,8 +3,8 @@
         <b-navbar toggleable="lg">
             <b-navbar-brand class="mr-5 brand">
                 <b-icon-chat-dots class="mr-3" variant="primary" style="height: 8vh; width: auto"/>
-                <h2>MeetChat</h2>
-                <p class="text-muted ml-1">v{{version}}</p>
+                <h3>MeetChat</h3>
+<!--                <p class="text-muted ml-1">v{{version}}</p>-->
             </b-navbar-brand>
             <b-navbar-toggle target="collapse"></b-navbar-toggle>
 

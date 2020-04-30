@@ -2,7 +2,7 @@
   <div id="app">
     <Headbar/>
     <div id="contentDesktop" class="border-top border-primary desktop">
-      <ChatList id="chatlistDesktop" class="border-right border-primary"/>
+      <ChatList id="chatlistDesktop" class="border-right border-primary customscroll"/>
       <Chatroom style="width: 100%"/>
     </div>
     <div class="border-top border-primary mobile">
@@ -34,6 +34,9 @@ export default {
     width: 25%;
     border-width: medium !important;
     z-index: 7000;
+    height: 88vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
   }
 
   #contentDesktop {
@@ -59,6 +62,20 @@ export default {
   }
 
   #app {
+  }
+
+  .customscroll::-webkit-scrollbar-track {
+    /*-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);*/
+    border-radius: 0;
+    background-color: rgba(245, 245, 245, 0);
+  }
+  .customscroll::-webkit-scrollbar {
+    width: 5px;
+    background-color: #F5F5F5;
+  }
+  .customscroll::-webkit-scrollbar-thumb {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+    background-color: $primary;
   }
 
 </style>

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div v-for="(chat, index) in chats" :key="chat.url">
+        <div v-for="(chat, index) in chats" :key="index+chat.name">
             <div class="listitem">
                 <chat-preview :chat="chat"/>
             </div>

@@ -102,19 +102,6 @@
     #chathistory {
         max-width: 100%;
     }
-    .customscroll::-webkit-scrollbar-track {
-        /*-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);*/
-        border-radius: 0;
-        background-color: rgba(245, 245, 245, 0);
-    }
-    .customscroll::-webkit-scrollbar {
-        width: 5px;
-        background-color: #F5F5F5;
-    }
-    .customscroll::-webkit-scrollbar-thumb {
-        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
-        background-color: $primary;
-    }
 
     #app {
 
