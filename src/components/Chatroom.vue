@@ -10,7 +10,8 @@
                 <b-button v-if="first>0" @click="revealOlder" style="width: 100%;">Ältere Nachrichten</b-button>
                 <transition-group name="chat" @after-enter="customScroll">
                     <Chatmessage :id="message._id+mobile" v-for="message in shortendMessages" :user="user"
-                                 :key="message.user+new Date(message.time).toISOString()" :message="message"></Chatmessage>
+                                 :key="message.user+new Date(message.time).toISOString()"
+                                 :message="message"></Chatmessage>
                 </transition-group>
             </div>
             <div id="sendbarWrapper">
@@ -67,6 +68,12 @@
         watch: {
             activeChat: function () {
                 this.changeRemote()
+            },
+            messages: function (newVal, oldVal) {
+                if (newVal.length === oldVal.length + 1) {
+                    const bing = new Audio("bing.mp3")
+                    bing.play();
+                }
             }
         },
         methods: {
@@ -81,7 +88,7 @@
 
             customScroll() {
                 if (this.reveal === 0) {
-                    document.getElementById(this.shortendMessages[this.shortendMessages.length - 1]._id+this.mobile).scrollIntoView({
+                    document.getElementById(this.shortendMessages[this.shortendMessages.length - 1]._id + this.mobile).scrollIntoView({
                         behavior: "smooth",
                         block: "start"
                     });
@@ -122,7 +129,7 @@
     #chathistory {
         max-width: 100%;
         height: 78vh;
-        padding-bottom: 60px;
+        padding-bottom: 80px;
     }
 
     #mobileHeader {
@@ -138,16 +145,17 @@
         max-height: 50px;
         bottom: 0;
         left: 0;
-        width: 100%;
+        width: 95%;
+        margin-right: 5%;
         display: flex;
         justify-content: end;
     }
 
     @include media-breakpoint-up(md) {
-        #senddiv{
+        #senddiv {
             margin-left: 300px;
         }
-        #chathistory{
+        #chathistory {
             height: 88vh;
         }
     }
