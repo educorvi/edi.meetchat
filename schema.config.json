@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Config Schema",
+  "description": "Ein Konfigurationsschema für die condif.json Datei von Meetchat",
+  "type": "object",
+  "required": [
+    "timeServer",
+    "couchDB"
+  ],
+  "properties": {
+    "timeServer": {
+      "description": "URL zum Server, von dem die Zeit abgerufen wird",
+      "type": "string",
+      "default": "https://time.jp-studios.de"
+    },
+    "couchDB": {
+      "description": "URL des Servers auf dem die CouchDB liegt",
+      "type": "string",
+      "default": "https://couch.kraeks.de"
+    }
+  }
+
+}

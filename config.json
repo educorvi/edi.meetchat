@@ -1,0 +1,5 @@
+{
+  "$schema": "schema.config.json",
+  "timeServer": "https://time.jp-studios.de",
+  "couchDB": "https://couch.kraeks.de"
+}

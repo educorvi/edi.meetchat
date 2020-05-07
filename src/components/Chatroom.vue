@@ -34,6 +34,7 @@
     import Chatmessage from "@/components/chatroomComponents/Chatmessage";
     import ChatsendBar from "@/components/chatroomComponents/chatsendBar";
     import CustomSpinner from "@/components/Helper/CustomSpinner";
+    import config from "@/../config.json"
 
     //Der Chatroom selbst; ```Chatmessages``` und ```chatsendBar``` werden hier zusammengefügt
     //@group Chatroom
@@ -92,17 +93,18 @@
                     this.first = this.messages.length - Math.min(this.messages.length, 50);
                     this.customScroll();
                     console.log("Success")
-                    // document.getElementById("senddiv").scrollIntoView({behavior: "smooth", block: "end"});
                 }).catch(err => console.error(err));
             },
 
             //Ist dafür zuständig, dass die neueste Nachricht ins Bild gescrollt wird
             customScroll() {
                 if (this.reveal === 0) {
-                    document.getElementById(this.shortendMessages[this.shortendMessages.length - 1]._id + this.mobile).scrollIntoView({
-                        behavior: "smooth",
-                        block: "start"
-                    });
+                    // document.getElementById(this.shortendMessages[this.shortendMessages.length - 1]._id + this.mobile).scrollIntoView({
+                    //     behavior: "smooth",
+                    //     block: "start"
+                    // });
+                    const objDiv = document.getElementById("overflow");
+                    objDiv.scrollTop = objDiv.scrollHeight;
 
                 } else {
                     this.reveal--;
@@ -128,7 +130,7 @@
             },
             //Gibt die mit dem Server synchronisierte Uhrzeit an
             async getServerTime() {
-                const res = await this.http.get("https://time.jp-studios.de");
+                const res = await this.http.get(config.timeServer);
                 //Das erste replace entfernt den Wochentag, das zweite den Zeitzonennamen, damit der String für Date lesbar ist
                 const date = res.data.replace(/([A-Za-z]+), /, "").replace(/ [A-Z]{3,4}/, "")
                 return new Date(date);
