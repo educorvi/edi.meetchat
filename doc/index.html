@@ -1,0 +1,19 @@
+<!DOCTYPE>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>MeetChat</title>
+    <link rel="stylesheet" href="https://unpkg.com/docute@4/dist/docute.css">
+  </head>
+  <body>
+    <div id="docute"></div>
+    <script src="https://unpkg.com/docute@4/dist/docute.js"></script>
+    <script>
+      new Docute({
+        target: '#docute',
+        sidebar: JSON.parse('[{&#34;title&#34;:&#34;ChatList&#34;,&#34;links&#34;:[{&#34;title&#34;:&#34;ChatList&#34;,&#34;link&#34;:&#34;/components/ChatList&#34;},{&#34;title&#34;:&#34;chatPreview&#34;,&#34;link&#34;:&#34;/components/chatPreview&#34;}]},{&#34;title&#34;:&#34;Chatroom&#34;,&#34;links&#34;:[{&#34;title&#34;:&#34;Chatmessage&#34;,&#34;link&#34;:&#34;/components/Chatmessage&#34;},{&#34;title&#34;:&#34;Chatroom&#34;,&#34;link&#34;:&#34;/components/Chatroom&#34;},{&#34;title&#34;:&#34;chatsendBar&#34;,&#34;link&#34;:&#34;/components/chatsendBar&#34;}]},{&#34;title&#34;:&#34;Helper&#34;,&#34;links&#34;:[{&#34;title&#34;:&#34;CustomSpinner&#34;,&#34;link&#34;:&#34;/components/CustomSpinner&#34;}]},{&#34;title&#34;:&#34;Navigation&#34;,&#34;links&#34;:[{&#34;title&#34;:&#34;Headbar&#34;,&#34;link&#34;:&#34;/components/Headbar&#34;}]}]'.replace(/\&\#34\;/g, '"'))
+      })
+    </script>
+  </body>
+</html>

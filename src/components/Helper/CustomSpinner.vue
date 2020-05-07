@@ -5,6 +5,7 @@
 </template>
 <script>
     //@vuese
+    //@group Helper
     //Eigener, zentrierter Spinner
     export default {
         name: 'CustomSpinner'

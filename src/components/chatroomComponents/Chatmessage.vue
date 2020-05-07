@@ -17,34 +17,42 @@
 <script>
     import {getUserId, deleteChat} from "@/database";
 
+    //@group Chatroom
+    //Stellt eine einzelne Chatnachricht dar
     export default {
         name: "Chatmessage",
         props: {
+            //Die Nachricht, die angezeigt werden soll
             message: {
                 type: Object,
                 required: true
             },
+            //Der aktuelle (vor dem Bildschirm sitzende) Nutzer und **nicht** der Nutzer, von dem die Nachricht stammt
             user: {
                 type: String,
                 required: true
             }
         },
         computed: {
+            //Ist der Nutzer, der die Nachricht gesendet hat, der aktuelle Nutzer?
             isSelf() {
                 return getUserId(this.user) === this.message.user
             },
+            //Gibt den anzuzeigenden Namen des Benutzers aus
             userName() {
                 // return getNameOfUser(this.message.user)
                 return this.message.user
             },
+            //Gibt das Datum in formatierter Form zurück
             date() {
                 const d = new Date(this.message.time)
-                const dtf = new Intl.DateTimeFormat('en', { year: 'numeric', month: '2-digit', day: '2-digit' })
+                const dtf = new Intl.DateTimeFormat('de', { year: 'numeric', month: '2-digit', day: '2-digit' })
                 const [{ value: mo },,{ value: da },,{ value: ye }] = dtf.formatToParts(d)
                 return `${da}.${mo}.${ye}`
             }
         },
         methods: {
+            //Reaktion auf das bzw Ersatz des Kontextmenüs, also das Löschen der Nachricht
             handler: function (e) {
                 e.preventDefault();
                 if ((this.isSelf || this.user.role === "admin") && !this.message.deleted) {
@@ -61,6 +69,8 @@
                     });
                 }
             },
+            //Prüft ob ein Datum der aktuelle Tag ist
+            //@arg Datum in Form eines ```Date``` Objekts
             isToday(someDate) {
                 const today = new Date()
                 return someDate.getDate() === today.getDate() &&

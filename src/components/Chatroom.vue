@@ -29,26 +29,30 @@
 
 <script>
     /* eslint-disable vue/no-unused-components */
-
     import {mapGetters} from "vuex"
     import {getAllMessages, putMessage, setRemote} from "@/database";
     import Chatmessage from "@/components/chatroomComponents/Chatmessage";
     import ChatsendBar from "@/components/chatroomComponents/chatsendBar";
-    import CustomSpinner from "@/components/CustomSpinner";
+    import CustomSpinner from "@/components/Helper/CustomSpinner";
 
+    //Der Chatroom selbst; ```Chatmessages``` und ```chatsendBar``` werden hier zusammengefügt
+    //@group Chatroom
     export default {
         name: "Chatroom",
         components: {CustomSpinner, ChatsendBar, Chatmessage},
         props: {
+            //Gibt an, ob es sich um ein mobiles Endgerät handelt
             mobile: {
                 type: Boolean,
             }
         },
         computed: {
             ...mapGetters(["activeChat", "messages"]),
+            //Das gekürzte Array der Nachrichten; damit nicht alle gerendert werden. Länge wird durch ```first``` bestimmt
             shortendMessages() {
                 return this.messages ? this.messages.slice(this.first, this.messages.length) : []
             },
+            //URL zur CouchDB des aktuellen Chats
             remote() {
                 return this.activeChat.url
             }
@@ -66,9 +70,11 @@
             }
         },
         watch: {
+            //Wenn sich der aktuelle Chat ändert, muss auch die CouchDB geändert bzw neu geladen werden
             activeChat: function () {
                 this.changeRemote()
             },
+            //Bei neuer Nachricht wird ein bing sound abgespielt
             messages: function (newVal, oldVal) {
                 if (newVal.length === oldVal.length + 1) {
                     const bing = new Audio("bing.mp3")
@@ -77,6 +83,7 @@
             }
         },
         methods: {
+            //Ändert die RemoteDB
             changeRemote() {
                 console.log("Change Remote")
                 setRemote(this.remote);
@@ -89,6 +96,7 @@
                 }).catch(err => console.error(err));
             },
 
+            //Ist dafür zuständig, dass die neueste Nachricht ins Bild gescrollt wird
             customScroll() {
                 if (this.reveal === 0) {
                     document.getElementById(this.shortendMessages[this.shortendMessages.length - 1]._id + this.mobile).scrollIntoView({
@@ -101,6 +109,7 @@
                 }
 
             },
+            //Methode für den "Ältere Zeigen"-Button; senkt ```first``` entsprechend
             revealOlder() {
                 const scrollTo = this.shortendMessages[0]._id;
                 this.$store.state.scrollWithChat = false;
@@ -108,6 +117,7 @@
                 this.first = this.first < 50 ? 0 : this.first - 50;
                 document.getElementById(scrollTo).scrollIntoView({block: "start"});
             },
+            //Erstellen/Senden einer Nachricht
             async send(p) {
                 const time = await this.getServerTime() || new Date();
                 putMessage({
@@ -116,7 +126,7 @@
                     time
                 })
             },
-
+            //Gibt die mit dem Server synchronisierte Uhrzeit an
             async getServerTime() {
                 const res = await this.http.get("https://time.jp-studios.de");
                 //Das erste replace entfernt den Wochentag, das zweite den Zeitzonennamen, damit der String für Date lesbar ist

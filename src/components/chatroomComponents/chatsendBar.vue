@@ -16,6 +16,8 @@
 </template>
 
 <script>
+    //Eine Leiste die das Erstellen und Absenden von Nachrichten erlaubt
+    //@group Chatroom
     export default {
         name: "chatsendBar",
         data() {
@@ -27,9 +29,12 @@
 
         },
         methods: {
+            //Methode zum senden der Nachricht
             send(evt) {
                 evt.preventDefault();
                 if (this.newMessage !== "") {
+                    //Eine neue Nachricht soll gesendet werden
+                    //@arg Der Text der neuen Nachricht
                     this.$emit("send", this.newMessage);
                     this.newMessage = "";
                 }

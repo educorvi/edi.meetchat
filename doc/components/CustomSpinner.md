@@ -1,0 +1,4 @@
+# CustomSpinner
+
+Eigener, zentrierter Spinner
+

@@ -1,10 +1,12 @@
 <template>
   <div id="app">
     <Headbar/>
+<!--    Variante für Desktops-->
     <div id="contentDesktop" class="border-top border-primary desktop">
       <ChatList id="chatlistDesktop" class="border-right border-primary customscroll"/>
       <Chatroom style="width: 100%"/>
     </div>
+<!--    Variante für Mobiles-->
     <div class="border-top border-primary mobile">
       <ChatList class="border-right border-primary customscroll" :mobile="true" v-if="!activeChat"/>
       <Chatroom style="width: 100%" v-else :mobile="true"/>
@@ -16,9 +18,11 @@
 <script>
 
 import ChatList from "@/components/ChatList";
-import Headbar from "@/components/Headbar";
+import Headbar from "@/components/Navigation/Headbar";
 import Chatroom from "@/components/Chatroom";
 import {mapGetters} from "vuex";
+
+//Hauptkomponente
 export default {
   name: 'App',
   components: {

@@ -7,9 +7,13 @@
 
 <script>
     import {mapGetters} from "vuex"
+
+    //@group ChatList
+    //Zeigt eine Preview des Chats in der Chatübersicht an
     export default {
         name: "chatPreview",
         props: {
+            //Der Chat, der angezeigt werden soll, in Form eines Objekts
             chat: {
                 type: Object,
                 required: true
@@ -17,6 +21,8 @@
         },
         computed: {
             ...mapGetters(["activeChat"]),
+
+            //Ist der Chat der gerade aktive?
             isActive() {
                 return this.chat === this.activeChat;
             }
@@ -26,6 +32,7 @@
 <style lang="scss" scoped>
     @import "src/styles";
 
+    /*Klasse für den Fall, das der Chat der aktivChat ist; wird nur angewendet, wenn im Desktopmodus*/
     @include media-breakpoint-up(md) {
         .active {
             background-color: $primary !important;
