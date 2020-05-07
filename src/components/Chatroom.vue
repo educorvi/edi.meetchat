@@ -66,17 +66,21 @@
             }
         },
         mounted() {
-            if (this.activeChat) {
-                this.changeRemote();
-            }
+            // if (this.activeChat) {
+            //     this.changeRemote();
+            // }
         },
         watch: {
             //Wenn sich der aktuelle Chat ändert, muss auch die CouchDB geändert bzw neu geladen werden
-            activeChat: function () {
-                this.changeRemote()
+            activeChat: function (newVal, oldVal) {
+                if (newVal !== oldVal) {
+                    this.changeRemote();
+                }
+
             },
             //Bei neuer Nachricht wird ein bing sound abgespielt
             messages: function (newVal, oldVal) {
+                this.first = this.messages.length - Math.min(this.messages.length, 50);
                 if (newVal.length === oldVal.length + 1) {
                     const bing = new Audio("bing.mp3")
                     bing.play();
@@ -86,6 +90,7 @@
         methods: {
             //Ändert die RemoteDB
             changeRemote() {
+                this.first = null;
                 console.log("Change Remote")
                 setRemote(this.remote);
                 console.log("get Messages")
@@ -99,12 +104,12 @@
             //Ist dafür zuständig, dass die neueste Nachricht ins Bild gescrollt wird
             customScroll() {
                 if (this.reveal === 0) {
-                    // document.getElementById(this.shortendMessages[this.shortendMessages.length - 1]._id + this.mobile).scrollIntoView({
-                    //     behavior: "smooth",
-                    //     block: "start"
-                    // });
-                    const objDiv = document.getElementById("overflow");
-                    objDiv.scrollTop = objDiv.scrollHeight;
+                    document.getElementById(this.shortendMessages[this.shortendMessages.length - 1]._id + this.mobile).scrollIntoView({
+                        behavior: "smooth",
+                        block: "start"
+                    });
+                    // const objDiv = document.getElementById("overflow");
+                    // objDiv.scrollTop = objDiv.scrollHeight;
 
                 } else {
                     this.reveal--;
@@ -113,7 +118,7 @@
             },
             //Methode für den "Ältere Zeigen"-Button; senkt ```first``` entsprechend
             revealOlder() {
-                const scrollTo = this.shortendMessages[0]._id;
+                const scrollTo = this.shortendMessages[0]._id+this.mobile;
                 this.$store.state.scrollWithChat = false;
                 this.reveal = this.first < 50 ? this.first : 50;
                 this.first = this.first < 50 ? 0 : this.first - 50;
