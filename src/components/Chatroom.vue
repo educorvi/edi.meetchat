@@ -109,7 +109,7 @@
                 document.getElementById(scrollTo).scrollIntoView({block: "start"});
             },
             async send(p) {
-                const time = await this.getServerTime();
+                const time = await this.getServerTime() || new Date();
                 putMessage({
                     user: this.user,
                     text: p,
@@ -118,7 +118,7 @@
             },
 
             async getServerTime() {
-                const res = await this.http.get("http://time.jp-studios.de");
+                const res = await this.http.get("https://time.jp-studios.de");
                 const date = res.data.replace(/([A-Za-z]+), /, "").replace(" CEST", "")
                 return new Date(date);
             }
