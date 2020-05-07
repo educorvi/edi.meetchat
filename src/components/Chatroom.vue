@@ -119,7 +119,8 @@
 
             async getServerTime() {
                 const res = await this.http.get("https://time.jp-studios.de");
-                const date = res.data.replace(/([A-Za-z]+), /, "").replace(" CEST", "")
+                //Das erste replace entfernt den Wochentag, das zweite den Zeitzonennamen, damit der String für Date lesbar ist
+                const date = res.data.replace(/([A-Za-z]+), /, "").replace(/ [A-Z]{3,4}/, "")
                 return new Date(date);
             }
         },
