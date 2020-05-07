@@ -31,7 +31,7 @@
     /* eslint-disable vue/no-unused-components */
 
     import {mapGetters} from "vuex"
-    import {setRemote, getAllMessages, putMessage} from "@/database";
+    import {getAllMessages, putMessage, setRemote} from "@/database";
     import Chatmessage from "@/components/chatroomComponents/Chatmessage";
     import ChatsendBar from "@/components/chatroomComponents/chatsendBar";
     import CustomSpinner from "@/components/CustomSpinner";
@@ -78,12 +78,15 @@
         },
         methods: {
             changeRemote() {
+                console.log("Change Remote")
                 setRemote(this.remote);
+                console.log("get Messages")
                 getAllMessages().then(() => {
                     this.first = this.messages.length - Math.min(this.messages.length, 50);
                     this.customScroll();
+                    console.log("Success")
                     // document.getElementById("senddiv").scrollIntoView({behavior: "smooth", block: "end"});
-                });
+                }).catch(err => console.error(err));
             },
 
             customScroll() {
@@ -105,13 +108,20 @@
                 this.first = this.first < 50 ? 0 : this.first - 50;
                 document.getElementById(scrollTo).scrollIntoView({block: "start"});
             },
-            send(p) {
+            async send(p) {
+                const time = await this.getServerTime();
                 putMessage({
                     user: this.user,
                     text: p,
-                    time: new Date()
+                    time
                 })
             },
+
+            async getServerTime() {
+                const res = await this.http.get("http://time.jp-studios.de");
+                const date = res.data.replace(/([A-Za-z]+), /, "").replace(" CEST", "")
+                return new Date(date);
+            }
         },
     }
 </script>

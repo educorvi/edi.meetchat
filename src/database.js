@@ -34,9 +34,10 @@ export function getAllMessages() {
         include_docs: true,
         attachments: true
     }).then(res => {
+        console.log("Got em all")
         let result = res.rows.map(obj => obj.doc);
         store.commit("setMessages", result)
-    })
+    }).catch(err => console.error(err))
 
 }
 
